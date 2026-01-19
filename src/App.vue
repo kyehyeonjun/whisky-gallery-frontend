@@ -767,7 +767,50 @@ button:hover { background-color: #e67e22; }
   100% { transform: rotate(360deg); }
 }
 
+/* 모바일 화면 최적화 */
 @media (max-width: 768px) {
-  .product-details { flex-direction: column; }
+  .container {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .main-content, .reviews-section {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 10px;
+  }
+
+  .header nav a {
+    margin: 0 10px;
+  }
+
+  .product-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .title-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+  }
+
+  .product-details {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .info-table th, .info-table td {
+    padding: 8px 4px;
+  }
+
+  .final-rating-display p {
+    font-size: 2rem;
+  }
 }
 </style>
