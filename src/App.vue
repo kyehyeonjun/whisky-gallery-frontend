@@ -260,8 +260,11 @@ const searchWhisky = async () => {
 
   isLoading.value = true;
   try {
-    // 백엔드 API 호출 (Vite 프록시를 통해 /api/whisky/{code}로 요청)
-    const response = await fetch(`/api/whisky/${whiskyData.value.wbCode}`);
+    // 환경에 따라 API 기본 URL을 설정합니다.
+    // 개발 중에는 vite.config.js의 프록시를 사용하기 위해 빈 문자열이 되고,
+    // 프로덕션 빌드 시에는 .env.production 파일의 VITE_API_BASE_URL 값을 사용합니다.
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+    const response = await fetch(`${baseUrl}/api/whisky/${whiskyData.value.wbCode}`);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -286,13 +289,19 @@ const searchWhisky = async () => {
 
 // 이미지 업로드 핸들러
 const handleImageUpload = (event: Event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      whiskyData.value.image = e.target.result;
-    };
-    reader.readAsDataURL(file);
+  const target = event.target as HTMLInputElement;
+  if (target && target.files) {
+    const file = target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result;
+        if (typeof result === 'string') {
+          whiskyData.value.image = result;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   }
 };
 
@@ -329,15 +338,18 @@ const flavorData = {
   dairy: { name: '유제품', items: ['버터', '크림', '치즈', '요거트', '우유'] }
 };
 
+// flavorData의 키 타입을 정의하여 TypeScript가 flavorData['someKey'] 접근을 이해할 수 있도록 합니다.
+type FlavorCategoryKey = keyof typeof flavorData;
+
 type FlavorArea = 'aroma' | 'taste' | 'finish';
 
 const selectorState = ref({
-  aroma: { selectedCategory: null as string | null },
-  taste: { selectedCategory: null as string | null },
-  finish: { selectedCategory: null as string | null },
+  aroma: { selectedCategory: null as FlavorCategoryKey | null },
+  taste: { selectedCategory: null as FlavorCategoryKey | null },
+  finish: { selectedCategory: null as FlavorCategoryKey | null },
 });
 
-const selectCategory = (area: FlavorArea, key: string) => {
+const selectCategory = (area: FlavorArea, key: FlavorCategoryKey) => {
   selectorState.value[area].selectedCategory = key;
 };
 
