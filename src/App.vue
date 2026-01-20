@@ -316,11 +316,8 @@ interface Review {
   comment: string;
 }
 
-// 샘플 리뷰 데이터
-const reviews = ref<Review[]>([
-  { user: 'WhiskyLover99', rating: 90, date: '2024-05-20', aroma: '달콤한 셰리, 건포도, 약간의 오크향', taste: '풍부한 과일 케이크, 다크 초콜릿, 시나몬', finish: '길고 부드러우며 따뜻한 여운', comment: '전체적으로 매우 만족스러운 셰리 위스키. 재구매 의사 있음.' },
-  { user: 'MaltMate', rating: 87, date: '2024-05-18', aroma: '신선한 사과, 바닐라, 약간의 스파이스', taste: '꿀과 같은 단맛, 약간의 후추, 복합적인 맛', finish: '중간 길이의 깔끔한 마무리', comment: '데일리로 즐기기 좋은 위스키. 가격대비 훌륭하다.' }
-]);
+// 리뷰 데이터 (초기에는 비어 있음)
+const reviews = ref<Review[]>([]);
 
 // 플레이버 데이터
 const flavorData = {
@@ -806,7 +803,25 @@ button:hover { background-color: #e67e22; }
   }
 
   .info-table th, .info-table td {
-    padding: 8px 4px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    text-align: left;
+  }
+
+  .info-table tr {
+    display: block;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .info-table tr:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   .final-rating-display p {
