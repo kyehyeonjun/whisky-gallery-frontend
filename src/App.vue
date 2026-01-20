@@ -2,7 +2,10 @@
   <div class="container">
     <!-- 상단 헤더 -->
     <header class="header">
-      <div class="logo">WHISKY GALLERY</div>
+      <a href="/" class="logo">
+        <img src="/whiskyIcon.png" alt="Whisky Gallery Logo" class="logo-icon">
+        <span>WHISKY GALLERY</span>
+      </a>
       <nav>
         <a href="#">위스키</a>
         <a href="#">커뮤니티</a>
@@ -517,7 +520,18 @@ body {
   align-items: center;
 }
 
-.logo { font-weight: bold; font-size: 1.5rem; }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* 아이콘과 텍스트 사이 간격 */
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo-icon { height: 32px; /* 아이콘 크기 조절 */ }
+
 .header nav a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
 
 .main-content { padding: 2rem; }
